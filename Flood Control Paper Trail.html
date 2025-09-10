@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senate Hearing: Flood Control Paper Trail</title>
+    <link rel="stylesheet" href="senate_hearing_flood.css">
+    <style>
+      body {
+        background: #eceadd;
+        font-family: 'Azeret Mono', 'Roboto Mono', monospace;
+        margin: 0;
+      }
+      .blog-content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 20px 80px 20px;
+      }
+      .blog-posts {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 60px;
+      }
+      .blog-post {
+        background: none;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+      .blog-post .receipt {
+        width: 370px;
+        min-height: 220px;
+        padding: 28px 18px 20px 18px;
+        background-color: #f5f5f5;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        margin: 0 auto;
+      }
+      .blog-post .receipt-header,
+      .blog-post .receipt-subheader,
+      .blog-post .receipt-message {
+        color: #444;
+      }
+      .blog-post .logo {
+        font-size: 3em;
+      }
+      @media (max-width: 500px) {
+        .blog-post .receipt {
+          width: 95vw;
+          padding: 10px;
+        }
+      }
+      .blog-post {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.5s cubic-bezier(.23,1.12,.71,.98);
+      }
+      .blog-post.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .senate-header {
+        background: #eceadd;
+        color: #444;
+        border-bottom: 2px solid #aaa;
+        box-shadow: none;
+        text-align: center;
+        padding: 32px 0 18px 0;
+      }
+      .senate-seal {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 18px;
+        background: radial-gradient(circle, #8d7b37 0%, #b8941f 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.6em;
+        color: #eceadd;
+        font-weight: bold;
+        border: 2px solid #fff;
+        box-shadow: 0 0 14px rgba(212,175,55,0.13);
+      }
+      .page-title {
+        color: #444;
+        font-size: 2.3em;
+        font-weight: 700;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+      }
+      .page-subtitle {
+        color: #8d7b37;
+        font-size: 1.08em;
+        font-style: italic;
+        margin-bottom: 12px;
+      }
+      .hearing-info {
+        background: #f5f5f5;
+        color: #222;
+        border-radius: 8px;
+        border: 1px solid #b8941f;
+        margin: 12px auto;
+        max-width: 410px;
+        padding: 10px 18px 10px 18px;
+        font-size: 0.98em;
+      }
+      .hearing-info h3 {
+        color: #8d7b37;
+        font-size: 1.13em;
+        margin-bottom: 8px;
+      }
+      .wrapper {
+        margin-bottom:60px;
+      }
+    </style>
+</head>
+<body>
+    <header class="senate-header">
+        <div class="senate-seal">₱</div>
+        <h1 class="page-title">Senate Hearing: Flood Control Paper Trail</h1>
+        <p class="page-subtitle">Following the Money Behind the Philippines' Flood Control Programs</p>
+        <div class="hearing-info">
+            <h3>Committee on Public Works and Highways</h3>
+            <p><strong>Subject:</strong> Investigation on the Implementation and Effectiveness of Flood Control Projects</p>
+            <p><strong>Date:</strong> Ongoing Parliamentary Investigation</p>
+            <p><strong>Focus:</strong> Multi-billion peso allocations and contractor accountability</p>
+        </div>
+    </header>
+    <div class="wrapper">
+        <div class="printer"></div>
+        <div class="printer-display">
+            <span class="printer-message">Click to print Senate receipt</span>
+            <div class="letter-wrapper">
+                <span class="letter">P</span>
+                <span class="letter">r</span>
+                <span class="letter">i</span>
+                <span class="letter">n</span>
+                <span class="letter">t</span>
+                <span class="letter">i</span>
+                <span class="letter">n</span>
+                <span class="letter">g</span>
+                <span class="letter">.</span>
+                <span class="letter">.</span>
+                <span class="letter">.</span>
+            </div>
+        </div>
+        <button class="print-button" id="printBtn">🖨</button>
+        <div class="receipt-wrapper" id="animatedReceipt">
+            <!-- Receipt animates here -->
+        </div>
+    </div>
+    <main class="blog-content">
+        <div class="blog-posts" id="blog-posts">
+            <div class="empty-state" style="text-align:center; color:#444;">
+                <h3>No receipts printed yet</h3>
+                <p>Click the printer button above to see Senate receipts appear here.</p>
+            </div>
+        </div>
+    </main>
+<script>
+const senateReceipts = [
+  {
+    region: "Bulacan",
+    project: "Calumpit River Wall (Frances Village)",
+    contractor: "Wawao Builders",
+    cost: 77199999.65
+  },
+  {
+    region: "Bulacan", 
+    project: "Sta. Lucia Flood Mitigation",
+    contractor: "Wawao Builders",
+    cost: 74041090.22
+  },
+  {
+    region: "Bulacan",
+    project: "Bulusan River Protection",
+    contractor: "St. Timothy Construction", 
+    cost: 96498200.7
+  },
+  {
+    region: "Bulacan",
+    project: "Buguion-Sergio Bayan-Balite-San Marcos-Palimbang",
+    contractor: "St. Timothy Construction",
+    cost: 39192632.83
+  },
+  {
+    region: "Bulacan",
+    project: "Piel River Wall (Baliuag)",
+    contractor: "Syms Construction Trading",
+    cost: 55730911.6
+  },
+  {
+    region: "Bulacan", 
+    project: "85 Projects under Sub-DEO",
+    contractor: "Wawao Builders",
+    cost: 597000000
+  },
+  {
+    region: "Navotas",
+    project: "Flood Control Projects incl. Pumping Station", 
+    contractor: "St. Timothy Construction",
+    cost: 529000000
+  },
+  {
+    region: "Parañaque",
+    project: "Parañaque Spillway Project",
+    contractor: "DPWH / JICA",
+    cost: 0
+  },
+  {
+    region: "Laguna de Bay",
+    project: "Laguna Lake Dredging Initiative",
+    contractor: "DPWH / LLDA", 
+    cost: 0
+  },
+  {
+    region: "North Manila",
+    project: "Drainage Works (Multiple Streets)",
+    contractor: "Various (Golden J's, V.R. Guevarra, etc.)",
+    cost: 96000000
+  },
+  {
+    region: "Quezon City",
+    project: "Flood Retention Basins (100+ units)",
+    contractor: "Quezon City LGU",
+    cost: 50000000
+  },
+  {
+    region: "Pasig", 
+    project: "Flood Control Projects incl. Riverbank Reinforcement",
+    contractor: "Discaya Firms",
+    cost: 100000000
+  },
+  {
+    region: "Metro Manila",
+    project: "Navotas Floodgate Rehabilitation",
+    contractor: "St. Timothy Construction",
+    cost: 100000000
+  },
+  {
+    region: "Metro Manila",
+    project: "Pasig Riverbank Reinforcement", 
+    contractor: "Discaya-linked firms",
+    cost: 100000000
+  },
+  {
+    region: "Metro Manila",
+    project: "Quezon City Retention Basins",
+    contractor: "Quezon City LGU",
+    cost: 50000000
+  },
+  {
+    region: "Central Luzon",
+    project: "Plaridel Flood Control Project",
+    contractor: "Independent",
+    cost: 96500000
+  },
+  {
+    region: "Central Luzon",
+    project: "Baliwag Flood Project", 
+    contractor: "Independent",
+    cost: 55000000
+  },
+  {
+    region: "Visayas",
+    project: "Western Visayas Road Project",
+    contractor: "Sunwest",
+    cost: 2600000000
+  },
+  {
+    region: "Cordillera & Mindanao",
+    project: "Abra Flood Control",
+    contractor: "MG Samidan",
+    cost: 96500000
+  },
+  {
+    region: "Cordillera & Mindanao",
+    project: "Agusan del Norte Riverbank Project",
+    contractor: "Equi-Parco", 
+    cost: 50000000
+  },
+  {
+    region: "Cordillera & Mindanao",
+    project: "Malabalay River Dike",
+    contractor: "Unknown",
+    cost: 75000000
+  }
+];
+
+let receiptCounter = 0;
+
+function formatCurrency(amount) {
+  return new Intl.NumberFormat('en-PH', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(amount);
+}
+
+function buildReceiptHTML(data, dateStr, senateRef) {
+  const costAmount = data.cost || 0;
+  const adminFee = costAmount * 0.05; // 5% admin
+  const total = costAmount + adminFee;
+  return `
+    <div class="receipt">
+      <div class="receipt-header">
+        REPUBLIC OF THE PHILIPPINES<br/>
+        DEPT. OF PUBLIC WORKS & HIGHWAYS<br/>
+        ${data.region}
+        <div class="logo">🏛️</div>
+      </div>
+      <div class="receipt-subheader">
+        Senate Ref: ${senateRef}<br/>
+        ${dateStr}
+      </div>
+      <table class="receipt-table">
+        <tbody>
+          <tr>
+            <th>Project</th>
+            <th>Details</th>
+            <th>Amount</th>
+          </tr>
+          <tr>
+            <td>Project</td>
+            <td>${data.project}</td>
+            <td>${formatCurrency(costAmount)}</td>
+          </tr>
+          ${adminFee > 0 ? `
+          <tr>
+            <td>Admin Fee</td>
+            <td>5%</td>
+            <td>${formatCurrency(adminFee)}</td>
+          </tr>
+          ` : ''}
+          <tr>
+            <td>Contractor</td>
+            <td colspan="2">${data.contractor}</td>
+          </tr>
+          <tr class="receipt-total">
+            <td colspan="2">Total Allocation</td>
+            <td>${formatCurrency(total)}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="receipt-message">
+        Thank you for viewing Senate evidence!<br/>
+        — Committee on Public Works & Highways —
+      </div>
+    </div>
+  `;
+}
+
+function printReceipt() {
+  // Remove previous receipt in printer area
+  document.getElementById('animatedReceipt').innerHTML = '';
+  // Remove empty state in blog if it's first print
+  const emptyState = document.querySelector('.empty-state');
+  if (emptyState) emptyState.remove();
+
+  // Get next data
+  const data = senateReceipts[receiptCounter % senateReceipts.length];
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-PH') + ' - ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  const senateRef = `SH-${String(Math.floor(Math.random() * 9000) + 1000)}`;
+
+  // Animate receipt in the printer
+  const animatedReceipt = document.getElementById('animatedReceipt');
+  animatedReceipt.innerHTML = buildReceiptHTML(data, dateStr, senateRef);
+
+  // Show receipt animation
+  document.querySelector('.wrapper').classList.add('printing');
+  document.querySelectorAll('.letter').forEach((letter, i) => {
+    setTimeout(() => { letter.style.opacity = '1'; }, i * 50);
+  });
+  document.querySelector('.printer-message').style.opacity = '0';
+
+  // After animation, move receipt to blog
+  setTimeout(() => {
+    addBlogPostReceipt(data, dateStr, senateRef);
+    resetPrinter();
+  }, 1800);
+
+  receiptCounter++;
+}
+
+function addBlogPostReceipt(data, dateStr, senateRef) {
+  const blogPosts = document.getElementById('blog-posts');
+  const postDiv = document.createElement('div');
+  postDiv.className = 'blog-post';
+  postDiv.innerHTML = buildReceiptHTML(data, dateStr, senateRef);
+  blogPosts.insertBefore(postDiv, blogPosts.firstChild);
+  setTimeout(() => { postDiv.classList.add('show'); }, 100);
+}
+
+function resetPrinter() {
+  document.querySelector('.wrapper').classList.remove('printing');
+  document.getElementById('animatedReceipt').innerHTML = '';
+  document.querySelectorAll('.letter').forEach(letter => {
+    letter.style.opacity = '0';
+  });
+  document.querySelector('.printer-message').style.opacity = '1';
+}
+
+document.getElementById('printBtn').onclick = printReceipt;
+</script>
+</body>
+</html>
